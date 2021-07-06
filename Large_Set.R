@@ -7,7 +7,10 @@ library(dplyr)
 library(sjmisc)
 
 #Import Data Set
-Data<-read_xlsx('Prelimenary_Data.xlsx')
+getwd()
+#if wd is (...)/Research, use Data/Preliminary_Data.xlsx . Otherwise, use Preliminary_Data.xlsx.
+Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
+
 
 #ICD Data Frame
 ICD_Codes <- data.frame(doc_id = Data$Id, code = Data$`ICD-10 Code`, success = Data$`Trial Success`)
@@ -47,7 +50,7 @@ Sufficient_Base <- subset(Code_Counts, n >= 50)
 .old <- Code_Counts$code[1]
 .nums <- 0
 .total <- 0
-.group_names <- rep(NA, nrow(Code_Counts))
+group_names <- rep(NA, nrow(Code_Counts))
 .treshhold <- 50
 
 Grouped_Codes <- data.frame(matrix(ncol = 2, nrow = 0))
@@ -62,10 +65,10 @@ for(i in 2:(nrow(Code_Counts))){
       # if it is the first element that is similar also take the one above
       if (.nums == 0){
         .total = .total + Code_Counts$n[i-1]
-        .group_names[i-1] = substr(.old, 0, 3)
+        group_names[i-1] = substr(.old, 0, 3)
       }
       
-      .group_names[i] = substr(.old, 0, 3)
+      group_names[i] = substr(.old, 0, 3)
       .total = .total + Code_Counts$n[i]
       .nums = .nums + 1
     }
@@ -79,16 +82,18 @@ for(i in 2:(nrow(Code_Counts))){
       .total = 0
       
       #Add standard name to the group
-      .group_names[i] = Code_Counts$code[i]
+      group_names[i] = Code_Counts$code[i]
       #Current code in old variable for use in the next loop
       .old = Code_Counts$code[i]
       
     }
   }
+  if(is.na(group_names[i]) && Code_Counts$n[i]<.treshhold){
+    group_names[i] = Code_Counts$code[i]
+  }
 }
 
-Code_Counts$groups=.group_names
+Code_Counts$groups=group_names
 
 #Get grouped codes with sufficient trials
 Sufficient_Grouped <- subset(Grouped_Codes, .total >= 50)
-
