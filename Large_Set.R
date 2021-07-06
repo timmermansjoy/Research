@@ -88,12 +88,31 @@ for(i in 2:(nrow(Code_Counts))){
       
     }
   }
-  if(is.na(group_names[i]) && Code_Counts$n[i]<.treshhold){
+  if(is.na(group_names[i])){
     group_names[i] = Code_Counts$code[i]
   }
 }
+#If, after original grouping, the group size is still smaller than treshhold: replace group with just the first letter
+for(i in 1:(nrow(Grouped_Codes))){
+  if(Grouped_Codes$.total[i]<.treshhold){
+    Grouped_Codes$group[i] = substr(Grouped_Codes$group[i], 0, 1)
+  }
+}
+#group Grouped_Codes to sum together all entries by group
+Grouped_Codes = aggregate(Grouped_Codes$.total, by=list(Category = Grouped_Codes$group), FUN=sum)
+colnames(Grouped_Codes) <- .x
 
+#group everything that's still too small
+for(i in 1:(nrow(Grouped_Codes))){
+  if(Grouped_Codes$total[i]<.treshhold){
+    Grouped_Codes$group[i] = "Others"
+  }
+}
+Grouped_Codes = aggregate(Grouped_Codes$total, by=list(Category = Grouped_Codes$group), FUN=sum)
+colnames(Grouped_Codes) <- .x
+
+#put groupname
 Code_Counts$groups=group_names
 
 #Get grouped codes with sufficient trials
-Sufficient_Grouped <- subset(Grouped_Codes, .total >= 50)
+Sufficient_Grouped <- subset(Grouped_Codes, total >= .treshhold)
