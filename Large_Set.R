@@ -43,6 +43,9 @@ Overall_Results$Tot_perc_triple <- ((.triple_overall$n[[2]]/(.triple_overall$n[[
 
 Overall_Results$Tot_perc_blind <- Overall_Results$Tot_perc_triple + Overall_Results$Tot_perc_double + Overall_Results$Tot_perc_single
 
+.control_overall <- dplyr::count(Data, Controlled)
+Overall_Results$Tot_perc_control <- ((.control_overall$n[[2]]/(.control_overall$n[[1]]+.control_overall$n[[2]]))*100)
+
 #Get codes with sufficient trials
 Sufficient_Base <- subset(Code_Counts, n >= 50)
 
@@ -113,6 +116,3 @@ colnames(Grouped_Codes) <- .x
 
 #put groupname
 Code_Counts$groups=group_names
-
-#Get grouped codes with sufficient trials
-Sufficient_Grouped <- subset(Grouped_Codes, total >= .treshhold)
