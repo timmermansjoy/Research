@@ -5,6 +5,7 @@ rm(list = ls(all.names = TRUE))
 library(readxl)
 library(dplyr)
 library(sjmisc)
+library(ggplot2)
 
 #Import Data Set
 getwd()
@@ -13,10 +14,10 @@ Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
 
 
 #ICD Data Frame
-ICD_Codes <- data.frame(doc_id = Data$Id, code = Data$`ICD-10 Code`, success = Data$`Trial Success`)
+.ICD_Codes <- data.frame(doc_id = Data$Id, code = Data$`ICD-10 Code`, success = Data$`Trial Success`)
 
 #Count Codes
-Code_Counts <- dplyr::count(ICD_Codes, code, sort=FALSE)
+Code_Counts <- dplyr::count(.ICD_Codes, code, sort=FALSE)
 
 #Overall Results
 Overall_Results <- data.frame(1)
@@ -26,7 +27,7 @@ Overall_Results$Tot_perc_term <- (.Termination$n[[2]]/(.Termination$n[[1]]+.Term
 
 Overall_Results$X1 <- NULL
 
-.succes_overall <-dplyr::count(ICD_Codes, success)
+.succes_overall <-dplyr::count(.ICD_Codes, success)
 Overall_Results$Tot_perc_suc <- ((.succes_overall$n[[3]]/(.succes_overall$n[[2]]+.succes_overall$n[[3]]))*100)
 
 .randomised_overall <- dplyr::count(Data, Randomized)
@@ -116,3 +117,9 @@ colnames(Grouped_Codes) <- .x
 
 #put groupname
 Code_Counts$groups=group_names
+
+#combine Sufficient_base with Grouped_codes
+#All_Groups <- rbind(Grouped_Codes, Sufficient_Base)
+
+#plot code occurrence
+ggplot(data=Sufficient_Base, aes(x=code, y=n)) + geom_bar(stat='identity', colour='black', fill='white')
