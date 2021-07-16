@@ -123,10 +123,12 @@ colnames(Sufficient_Base)<-colnames(Grouped_Codes)
 All_Groups <- rbind(Grouped_Codes, Sufficient_Base)
 
 #plot code occurrence
+#, fill=substr(group, 0, 1)
 ggplot(data=All_Groups, aes(x=group, y=total)) + 
   geom_bar(stat='identity', width = 0.8) + 
   theme_minimal() + 
   xlab ("ICD-10 Codes") + 
   ylab ("Frequency") + 
-  geom_text(aes(label=total), vjust=-0.3, size=3.5) + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  theme(legend.title = element_blank())
+  #theme(legend.position = "none")
