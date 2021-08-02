@@ -12,7 +12,6 @@ getwd()
 #if wd is (...)/Research, use Data/Preliminary_Data.xlsx . Otherwise, use Preliminary_Data.xlsx.
 Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
 
-
 #ICD Data Frame
 .ICD_Codes <- data.frame(doc_id = Data$Id, code = Data$`ICD-10 Code`, success = Data$`Trial Success`)
 
@@ -123,12 +122,11 @@ colnames(Sufficient_Base)<-colnames(Grouped_Codes)
 All_Groups <- rbind(Grouped_Codes, Sufficient_Base)
 
 #plot code occurrence
-#, fill=substr(group, 0, 1)
-ggplot(data=All_Groups, aes(x=group, y=total)) + 
+ggplot(data=All_Groups, aes(x=group, y=total, fill=substr(group, 0, 1))) + 
   geom_bar(stat='identity', width = 0.8) + 
   theme_minimal() + 
   xlab ("ICD-10 Codes") + 
   ylab ("Frequency") + 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   theme(legend.title = element_blank())
-  #theme(legend.position = "none")
+  theme(legend.position = "none")
