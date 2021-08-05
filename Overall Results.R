@@ -1,3 +1,5 @@
+#This script investigates the success and trial design across all included clinical trials from the WHO clinical trial registry
+
 #Clear workspace
 rm(list = ls(all.names = TRUE))
 
@@ -33,6 +35,29 @@ Overall_Results$Tot_perc_triple <- ((.triple_overall$n[[2]]/(.triple_overall$n[[
 Overall_Results$Tot_perc_blind <- Overall_Results$Tot_perc_triple + Overall_Results$Tot_perc_double + Overall_Results$Tot_perc_single
 .control_overall <- dplyr::count(Data, Controlled)
 Overall_Results$Tot_perc_control <- ((.control_overall$n[[2]]/(.control_overall$n[[1]]+.control_overall$n[[2]]))*100)
+.RCT <- subset(Data, Controlled == TRUE & Randomized == TRUE)
+Overall_Results$tot_perc_RCT <- (nrow(.RCT)/nrow(Data))*100
 
 #Randomised vs non-randomised
-Randomised <- .ICD_Codes[which(.ICD_Codes$Randomised == "TRUE")]
+.Randomised <- subset(Data, Randomized == TRUE)
+.Non_Randomised <- subset (Data, Randomized == FALSE)
+.success_randomised <- dplyr::count(.Randomised, Trial_Success)
+.success_non_randomised <- dplyr::count(.Non_Randomised, Trial_Success)
+Randomised_Success <- (.success_randomised$n[[3]]/(.success_randomised$n[[3]]+.success_randomised$n[[2]]))*100
+Non_Randomised_Success <- (.success_non_randomised$n[[2]]/(.success_non_randomised$n[[2]]+.success_non_randomised$n[[1]]))*100
+
+#Controlled vs Non-Controlled
+.Controlled <- subset(Data, Controlled == TRUE)
+.Non_Controlled <- subset (Data, Controlled == FALSE)
+.success_Controlled <- dplyr::count(.Controlled, Trial_Success)
+.success_non_Controlled <- dplyr::count(.Non_Controlled, Trial_Success)
+Controlled_Success <- (.success_Controlled$n[[3]]/(.success_Controlled$n[[2]]+.success_Controlled$n[[3]]))*100
+Non_Controlled_Success <- (.success_non_Controlled$n[[3]]/(.success_non_Controlled$n[[2]]+.success_non_Controlled$n[[3]]))*100
+
+#RCT vs non-RCT
+.non_RCT <- subset(Data, Controlled == FALSE & Randomized == FALSE)
+.success_non_RCT <- dplyr::count(.non_RCT, .non_RCT$Trial_Success)
+Non_RCT_Success <- (.success_non_RCT$n[[2]]/(.success_non_RCT$n[[2]]+.success_non_RCT$n[[1]])*100)
+.success_RCT <- dplyr::count(.RCT, .RCT$Trial_Success)
+RCT_Success <- (.success_RCT$n[[3]]/(.success_RCT$n[[2]]+.success_RCT$n[[3]])*100)
+

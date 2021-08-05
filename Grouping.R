@@ -1,3 +1,6 @@
+#This script automaticaly groups all clinical trials based on their assigned ICD-10 code with a minimum group size of the chosen threshold
+#Here, threshold = 50
+
 #Count Codes
 Code_Counts <- dplyr::count(.ICD_Codes, code, sort=FALSE)
 
