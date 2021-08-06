@@ -84,3 +84,4 @@ Code_Counts_Safety$groups=group_names_safety
 #combine Sufficient_Base_Safety with Grouped_Codes_Safety
 colnames(Sufficient_Base_Safety)<-colnames(Grouped_Codes_Safety)
 All_Groups_Safety <- rbind(Grouped_Codes_Safety, Sufficient_Base_Safety)
+
