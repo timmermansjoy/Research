@@ -1,5 +1,8 @@
 #This script calculates the overall results for all safety trials
 
+#Subset Safety Trials
+Safety <- subset(Data, Safety == TRUE)
+
 #Overall Results Percentage
 Overall_Results_Safety <- data.frame(1)
 .Termination_safety <- dplyr::count(Safety, Terminated)
