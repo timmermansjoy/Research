@@ -1,5 +1,20 @@
-#This script automaticaly groups all clinical trials based on their assigned ICD-10 code with a minimum group size of the chosen threshold
+#This script automatically groups all clinical trials based on their assigned ICD-10 code with a minimum group size of the chosen threshold
 #Here, threshold = 50
+
+#Clear workspace
+rm(list = ls(all.names = TRUE))
+
+#Packages
+library(readxl)
+library(dplyr)
+library(sjmisc)
+source("Utils.R")
+
+#Import Data Set
+Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
+
+#ICD Data Frame
+.ICD_Codes <- data.frame(doc_id = Data$Id, code = Data$`ICD-10 Code`, success = Data$`Trial_Success`, Randomised = Data$Randomized)
 
 #Count Codes
 Code_Counts <- dplyr::count(.ICD_Codes, code, sort=FALSE)

@@ -1,6 +1,21 @@
 #This script selects only the safety related trials and groups these based on their ICD-10 codes. Groups will have a minimum size of the "Threshold
 #Threshold = 50
 
+#Clear workspace
+rm(list = ls(all.names = TRUE))
+
+#Packages
+library(readxl)
+library(dplyr)
+library(sjmisc)
+source("Utils.R")
+
+#Import Data Set
+Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
+
+#Subset Safety Trials
+Safety <- subset(Data, Safety == TRUE)
+
 #ICD Data Frame
 .ICD_Codes_Safety <- data.frame(doc_id = Safety$Id, code = Safety$`ICD-10 Code`, success = Safety$Trial_Success)
 
