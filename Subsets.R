@@ -80,8 +80,13 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'G30.9')
 #G
 G <- subset(Data_Subset, grepl("^G", Data_Subset$`ICD-10 Code`))
 .suc_G <- dplyr::count(G, Trial_Success)
+<<<<<<< HEAD
 .z <- data.frame(Field = "Nervous System", Success = Percentage_calc_large(.suc_G))
 .y <- data.frame(Field = "Nervous System", Termination = subset_termination_large(.suc_G))
+=======
+.z <- data.frame(Field = "Nervous System", Success = Percentage_calc(.suc_G))
+.y <- data.frame(Field = "Nervous System", Termination = subset_termination(.suc_G))
+>>>>>>> bb7b48d4cf8ee3b25cb8635117e47d910b057462
 Subgroup_Success <- rbind(Subgroup_Success, .z)
 Subgroup_Termination <- rbind(Subgroup_Termination, .y)
 Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != grepl("^G", Data_Subset$`ICD-10 Code`))
