@@ -23,8 +23,8 @@ ggplot(data = Subgroup_Success, aes(x = Field, y = Success)) +
   theme_minimal() +
   xlab ("Field of Research") +
   ylab ("Percentage Positive Outcomes") +
-  scale_y_continuous(limits = c(0 , 100))
-  #Angle x-axis names: theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  scale_y_continuous(limits = c(0 , 100)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 #Plot subgroup termination
 #Associated script: Subsets.R
@@ -34,5 +34,5 @@ ggplot(data = Subgroup_Termination, aes(x = Field, y = Termination)) +
   theme_minimal() +
   xlab ("Field of Research") +
   ylab ("Percentage Terminated Trials") +
-  scale_y_continuous(limits = c(0 , 100))
-#Angle x-axis names: theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  scale_y_continuous(limits = c(0 , 100)) +
+ theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
