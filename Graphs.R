@@ -35,4 +35,4 @@ ggplot(data = Subgroup_Termination, aes(x = Field, y = Termination)) +
   xlab ("Field of Research") +
   ylab ("Percentage Terminated Trials") +
   scale_y_continuous(limits = c(0 , 100)) +
- theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
