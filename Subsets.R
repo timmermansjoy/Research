@@ -9,7 +9,6 @@ rm(list = ls(all.names = TRUE))
 library(readxl)
 library(dplyr)
 library(sjmisc)
-library(reshape2)
 source("Utils.R")
 
 #Import Data Set
@@ -55,8 +54,8 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'B24')
 .B <- subset(Data_Subset, grepl("^B", Data_Subset$`ICD-10 Code`))
 .AB <- rbind(.A, .B)
 .suc_AB <- dplyr::count(.AB, Trial_Success)
-.z <- data.frame(Field = "Infectious and Parasitic Disease, other", Success = Percentage_calc(.suc_AB))
-.y <- data.frame(Field = "Infectious and Parasitic Disease, other", Termination = subset_termination(.suc_AB))
+Success_Chapter <- data.frame(Field = "Infectious and Parasitic Disease, other", Success = Percentage_calc(.suc_AB))
+Termination_Chapter <- data.frame(Field = "Infectious and Parasitic Disease, other", Termination = subset_termination(.suc_AB))
 Subgroup_Success <- rbind(Subgroup_Success, .z)
 Subgroup_Termination <- rbind(Subgroup_Termination, .y)
 #remove A and B from dataset
@@ -100,15 +99,58 @@ Data_Subset <- subset(Data_Subset, Data_Subset$'ICD-10 Code' != 'C22.0' & Data_S
                         Data_Subset$'ICD-10 Code' != 'C22.5' & Data_Subset$'ICD-10 Code' != 'C22.6' & Data_Subset$'ICD-10 Code' != 'C22.7' & 
                         Data_Subset$'ICD-10 Code' != 'C22.8' & Data_Subset$'ICD-10 Code' != 'C22.9')
 #C25.9
+.pancreas_cancer <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C25.9')
+.suc_pancreas_cancer <- dplyr::count(.pancreas_cancer, Trial_Success)
+.z <- data.frame(Field = "Cancer, Pancreas", Success = Percentage_calc(.suc_pancreas_cancer))
+.y <- data.frame(Field = "Cancer, Pancreas", Termination = subset_termination(.suc_pancreas_cancer))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C25.9')
+
 #C34.9
+.lung_cancer <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C34.9')
+.suc_lung_cancer <- dplyr::count(.lung_cancer, Trial_Success)
+.z <- data.frame(Field = "Cancer, Lung", Success = Percentage_calc(.suc_lung_cancer))
+.y <- data.frame(Field = "Cancer, Lung", Termination = subset_termination(.suc_lung_cancer))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C34.9')
+
 #C56
+.Ovary_cancer <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C56')
+.suc_Ovary_cancer <- dplyr::count(.Ovary_cancer, Trial_Success)
+.z <- data.frame(Field = "Cancer, Ovary", Success = Percentage_calc(.suc_Ovary_cancer))
+.y <- data.frame(Field = "Cancer, Ovary", Termination = subset_termination(.suc_Ovary_cancer))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C56')
+
 #C61
+.Prostate_cancer <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C61')
+.suc_Prostate_cancer <- dplyr::count(.Prostate_cancer, Trial_Success)
+.z <- data.frame(Field = "Cancer, Prostate", Success = Percentage_calc(.suc_Prostate_cancer))
+.y <- data.frame(Field = "Cancer, Prostate", Termination = subset_termination(.suc_Prostate_cancer))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C61')
+
 #C71.9
+.Brain_cancer <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C71.9')
+.suc_Brain_cancer <- dplyr::count(.Brain_cancer, Trial_Success)
+.z <- data.frame(Field = "Cancer, Brain", Success = Percentage_calc(.suc_Brain_cancer))
+.y <- data.frame(Field = "Cancer, Brain", Termination = subset_termination(.suc_Brain_cancer))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C71.9')
+
 #C80.9
-#C85.9
-#C90.0
-#C94.2
-#C95.9
+.cancer_NOS <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C80.9')
+.suc_cancer_NOS <- dplyr::count(.cancer_NOS, Trial_Success)
+.z <- data.frame(Field = "Cancer, Unspecified", Success = Percentage_calc(.suc_cancer_NOS))
+.y <- data.frame(Field = "Cancer, Unspecified", Termination = subset_termination(.suc_cancer_NOS))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C80.9')
 
 #C83
 .C83 <- subset(Data_Subset, Data_Subset$'ICD-10 Code' == 'C83.0' | Data_Subset$'ICD-10 Code' == 'C83.1' | 
@@ -125,6 +167,24 @@ Data_Subset <- subset(Data_Subset, Data_Subset$'ICD-10 Code' != 'C83.0' & Data_S
                         Data_Subset$'ICD-10 Code' != 'C83.5' & Data_Subset$'ICD-10 Code' != 'C83.6' & Data_Subset$'ICD-10 Code' != 'C83.7' & 
                         Data_Subset$'ICD-10 Code' != 'C83.8' & Data_Subset$'ICD-10 Code' != 'C83.9')
 
+#C85.9
+.cancer_NHlymphoma <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C85.9')
+.suc_NHlymphoma_cancer <- dplyr::count(.cancer_NHlymphoma , Trial_Success)
+.z <- data.frame(Field = "Cancer, Lymphoma Unspecified", Success = Percentage_calc(.suc_NHlymphoma_cancer ))
+.y <- data.frame(Field = "Cancer, Lymphoma Unspecified", Termination = subset_termination(.suc_NHlymphoma_cancer ))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C85.9')
+
+#C90.0
+.cancer_MultipleMyeloma<- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C90.0')
+.suc_MultipleMyeloma_cancer <- dplyr::count(.cancer_MultipleMyeloma , Trial_Success)
+.z <- data.frame(Field = "Cancer, Multiple Myeloma", Success = Percentage_calc(.suc_MultipleMyeloma_cancer ))
+.y <- data.frame(Field = "Cancer, Multiple Myeloma", Termination = subset_termination(.suc_MultipleMyeloma_cancer ))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C90.0')
+
 #C91
 .C91 <- subset(Data_Subset, Data_Subset$'ICD-10 Code' == 'C91.0' | Data_Subset$'ICD-10 Code' == 'C91.1' | 
                  Data_Subset$'ICD-10 Code' == 'C91.2' | Data_Subset$'ICD-10 Code' == 'C91.3' | Data_Subset$'ICD-10 Code' == 'C91.4' | 
@@ -140,14 +200,31 @@ Data_Subset <- subset(Data_Subset, Data_Subset$'ICD-10 Code' != 'C91.0' & Data_S
                         Data_Subset$'ICD-10 Code' != 'C91.5' & Data_Subset$'ICD-10 Code' != 'C91.6' & Data_Subset$'ICD-10 Code' != 'C91.7' & 
                         Data_Subset$'ICD-10 Code' != 'C91.8' & Data_Subset$'ICD-10 Code' != 'C91.9')
 
+#C94.2
+.cancer_AML<- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C94.2')
+.suc_AML_cancer <- dplyr::count(.cancer_AML , Trial_Success)
+.z <- data.frame(Field = "Cancer, Acute Myeloid Leukaemia", Success = Percentage_calc(.suc_AML_cancer ))
+.y <- data.frame(Field = "Cancer, Acute Myeloid Leukaemia", Termination = subset_termination(.suc_AML_cancer ))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C94.2')
+
+#C95.9
+.cancer_Leukaemia_NOS<- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'C95.9')
+.suc_Leukaemia_NOS_cancer <- dplyr::count(.cancer_Leukaemia_NOS , Trial_Success)
+.z <- data.frame(Field = "Cancer, Leukaemia Unspecified", Success = Percentage_calc(.suc_Leukaemia_NOS_cancer ))
+.y <- data.frame(Field = "Cancer, Leukaemia Unspecified", Termination = subset_termination(.suc_Leukaemia_NOS_cancer ))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C95.9')
 
 #C
 .C <- subset(Data_Subset, grepl("^C", Data_Subset$`ICD-10 Code`))
 .suc_C <- dplyr::count(.C, Trial_Success)
 .z <- data.frame(Field = "Cancer, other", Success = Percentage_calc(.suc_C))
 .y <- data.frame(Field = "Cancer, other", Termination = subset_termination(.suc_C))
-Subgroup_Success <- rbind(Subgroup_Success, .z)
-Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Success_Chapter <- rbind(Success_Chapter, .z)
+Termination_Chapter <- rbind(Termination_Chapter, .y)
 #remove C from dataset
 
 #D
@@ -171,8 +248,8 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'G30.9')
 .suc_G <- dplyr::count(.G, Trial_Success)
 .z <- data.frame(Field = "Nervous System, other", Success = Percentage_calc_large(.suc_G))
 .y <- data.frame(Field = "Nervous System, other", Termination = subset_termination_large(.suc_G))
-Subgroup_Success <- rbind(Subgroup_Success, .z)
-Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Success_Chapter <- rbind(Success_Chapter, .z)
+Termination_Chapter <- rbind(Termination_Chapter, .y)
 Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != grepl("^G", Data_Subset$`ICD-10 Code`))
 #removing "G" from the dataset does not work as of yet
 
