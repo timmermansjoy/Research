@@ -32,7 +32,8 @@ Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
 #B18.2
 .Chronic_viral_hepatitis_C <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'B18.2')
 .suc_HepC <- dplyr::count(.Chronic_viral_hepatitis_C, Trial_Success)
-#create temporary dataframes for percentages in the current group, Z being for positive outcomes, Y for Termination
+#create temporary dataframes for percentages in the current group
+#Z being for positive outcomes, Y for Termination
 .z <- data.frame(Field = "Chronic Viral Hepatitis C", Success = Percentage_calc(.suc_HepC))
 .y <- data.frame(Field = "Chronic Viral Hepatitis C", Termination = subset_termination(.suc_HepC))
 #Add temporary dataframes to permanent outcome dataframes
@@ -56,8 +57,6 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'B24')
 .suc_AB <- dplyr::count(.AB, Trial_Success)
 Success_Chapter <- data.frame(Field = "Infectious and Parasitic Disease, other", Success = Percentage_calc(.suc_AB))
 Termination_Chapter <- data.frame(Field = "Infectious and Parasitic Disease, other", Termination = subset_termination(.suc_AB))
-Subgroup_Success <- rbind(Subgroup_Success, .z)
-Subgroup_Termination <- rbind(Subgroup_Termination, .y)
 #remove A and B from dataset
 
 #C16
