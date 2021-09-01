@@ -6,6 +6,7 @@ rm(list = ls(all.names = TRUE))
 
 #Packages
 library(readxl)
+library(writexl)
 library(dplyr)
 library(sjmisc)
 source("Utils.R")
@@ -93,3 +94,6 @@ Code_Counts$groups=group_names
 #combine Sufficient_base with Grouped_codes
 colnames(Sufficient_Base)<-colnames(Grouped_Codes)
 All_Groups <- rbind(Grouped_Codes, Sufficient_Base)
+
+#Export
+All_Groups <- write_xlsx(All_Groups, "data//All_Groups.xlsx")

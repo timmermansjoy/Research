@@ -9,6 +9,7 @@ rm(list = ls(all.names = TRUE))
 library(readxl)
 library(dplyr)
 library(sjmisc)
+library(stringr)
 source("Utils.R")
 
 #Import Data Set
@@ -57,6 +58,8 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'B24')
 .suc_AB <- dplyr::count(.AB, Trial_Success)
 Success_Chapter <- data.frame(Field = "Infectious and Parasitic Disease, other", Success = Percentage_calc(.suc_AB))
 Termination_Chapter <- data.frame(Field = "Infectious and Parasitic Disease, other", Termination = subset_termination(.suc_AB))
+Data_Subset <- subset(Data_Subset, !str_detect(Data_Subset$`ICD-10 Code`, "A"))
+Data_Subset <- subset(Data_Subset, !str_detect(Data_Subset$`ICD-10 Code`, "B"))
 #remove A and B from dataset
 
 #C16
@@ -224,6 +227,7 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'C95.9')
 .y <- data.frame(Field = "Cancer, other", Termination = subset_termination(.suc_C))
 Success_Chapter <- rbind(Success_Chapter, .z)
 Termination_Chapter <- rbind(Termination_Chapter, .y)
+Data_Subset <- subset(Data_Subset, !str_detect(Data_Subset$`ICD-10 Code`, "C"))
 #remove C from dataset
 
 #D
@@ -249,13 +253,20 @@ Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'G30.9')
 .y <- data.frame(Field = "Nervous System, other", Termination = subset_termination_large(.suc_G))
 Success_Chapter <- rbind(Success_Chapter, .z)
 Termination_Chapter <- rbind(Termination_Chapter, .y)
-Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != grepl("^G", Data_Subset$`ICD-10 Code`))
-#removing "G" from the dataset does not work as of yet
+Data_Subset <- subset(Data_Subset, !str_detect(Data_Subset$`ICD-10 Code`, "G"))
 
 #H35
 #H
 #I
 #J11.1
+.Influenza <- subset(Data_Subset, Data_Subset$`ICD-10 Code` == 'J11.1')
+.suc_Influenza <- dplyr::count(.Influenza, Trial_Success)
+.z <- data.frame(Field = "Influenza", Success = Percentage_calc(.suc_Influenza))
+.y <- data.frame(Field = "Influenza", Termination = subset_termination(.suc_Influenza))
+Subgroup_Success <- rbind(Subgroup_Success, .z)
+Subgroup_Termination <- rbind(Subgroup_Termination, .y)
+Data_Subset <- subset(Data_Subset, Data_Subset$`ICD-10 Code` != 'J11.1')
+
 #J44.9
 #J45.9
 #J

@@ -40,7 +40,7 @@ ggplot(data = Subgroup_Termination, aes(x = Field, y = Termination)) +
 #Plot Chapter Success
 #Associated script: Subsets.R
 library(ggplot2)
-ggplot(data = Success_Chapter, aes(x = Field, y = Success)) +
+ggplot(data = Chapter_Success, aes(x = Field, y = Success)) +
   geom_bar(stat = "identity", width = 0.8) +
   theme_minimal() +
   xlab ("Field of Research") +
@@ -51,10 +51,10 @@ ggplot(data = Success_Chapter, aes(x = Field, y = Success)) +
 #Plot Chapter Termination
 #Associated script: Subsets.R
 library(ggplot2)
-ggplot(data = Termination_Chapter, aes(x = Field, y = Termination)) +
+ggplot(data = Chapter_Termination, aes(x = Field, y = Termination)) +
   geom_bar(stat = "identity", width = 0.8) +
   theme_minimal() +
   xlab ("Field of Research") +
-  ylab ("Percentage Positive Outcomes") +
+  ylab ("Percentage Terminated Trials") +
   scale_y_continuous(limits = c(0 , 100)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
