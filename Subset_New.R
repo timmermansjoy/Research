@@ -85,7 +85,7 @@ for(i in 1:(nrow(Subgroups_Subset2))){
     Chapter_Success <- rbind(Chapter_Success, .z)
     Chapter_Termination <- rbind(Chapter_Termination, .y)
     #Delete Used data from primary dataframes
-    Data <- subset(Data, !str_detect(Data$`ICD-10 Code`, Subgroups_Subset2$group[[i]]))
+    Data_Subset <- subset(Data_Subset, !str_detect(Data$`ICD-10 Code`, Subgroups_Subset2$group[[i]]))
     Subgroups_Subset3 <- subset(Subgroups_Subset3, Subgroups_Subset3$group != Subgroups_Subset2$group[[i]])
   }
 }
