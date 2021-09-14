@@ -1,4 +1,4 @@
-#This script extracts the several groups (created in the script "Grouping.R") from the full dataset 
+#This script extracts the several groups (created in the script "Grouping.R") from the full dataset
 #and calculates the success within these groups
 
 #Step 1: Run Grouping.R to retreive the subgroups
@@ -75,7 +75,7 @@ for(i in 1:(nrow(Subgroups_Subset2))){
   #If code has 1 character
   if (nchar(Subgroups_Subset2$group[[i]]) == 1){
     #subset code
-    .a <- subset(Data_Subset, grepl(paste('^', Subgroups_Subset2$group[[i]], sep = ""), Data_Subset$`ICD-10 Code`))
+    .a <- subset(Data, grepl(paste('^', Subgroups_Subset2$group[[i]], sep = ""), Data$`ICD-10 Code`))
     #Count Success
     .b <- dplyr::count(.a, Trial_Success)
     #Create dataframes with percentage positive outcomes and terminations
@@ -85,7 +85,7 @@ for(i in 1:(nrow(Subgroups_Subset2))){
     Chapter_Success <- rbind(Chapter_Success, .z)
     Chapter_Termination <- rbind(Chapter_Termination, .y)
     #Delete Used data from primary dataframes
-    Data_Subset <- subset(Data_Subset, !str_detect(Data_Subset$`ICD-10 Code`, Subgroups_Subset2$group[[i]]))
+    Data <- subset(Data, !str_detect(Data$`ICD-10 Code`, Subgroups_Subset2$group[[i]]))
     Subgroups_Subset3 <- subset(Subgroups_Subset3, Subgroups_Subset3$group != Subgroups_Subset2$group[[i]])
   }
 }
@@ -99,4 +99,3 @@ for(i in 1:(nrow(Subgroups_Subset2))){
 #Add percentages to full overview dataframe
 Chapter_Success <- rbind(Chapter_Success, .z)
 Chapter_Termination <- rbind(Chapter_Termination, .y)
-
