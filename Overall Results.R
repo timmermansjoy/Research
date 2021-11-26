@@ -20,7 +20,7 @@ Data<-read_xlsx('Data/Prelimenary_Data.xlsx')
 .tot_perc_term <- Percentage_calc(.Termination)
 Overall_Results <- data.frame(.tot_perc_term)
 .succes_overall <-dplyr::count(.ICD_Codes, success)
-Overall_Results$Tot_perc_suc <- Percentage_calc_large(.success_overall)
+Overall_Results$Tot_perc_suc <- Percentage_calc(.succes_overall)
 .randomised_overall <- dplyr::count(Data, Randomized)
 Overall_Results$Tot_perc_rand <- Percentage_calc(.randomised_overall)
 .single_overall <- dplyr::count(Data, Single_Blind)
@@ -43,7 +43,7 @@ Efficacy <- subset(Data, Safety == FALSE)
 .Non_Randomised <- subset (Efficacy, Randomized == FALSE)
 .success_randomised <- dplyr::count(.Randomised, Trial_Success)
 .success_non_randomised <- dplyr::count(.Non_Randomised, Trial_Success)
-.Randomised_Success <- Percentage_calc_large(.success_randomised)
+.Randomised_Success <- Percentage_calc(.success_randomised)
 .Non_Randomised_Success <- Percentage_calc(.success_non_randomised)
 
 #Controlled vs Non-Controlled, Efficacy
@@ -51,8 +51,8 @@ Efficacy <- subset(Data, Safety == FALSE)
 .Non_Controlled <- subset (Efficacy, Controlled == FALSE)
 .success_Controlled <- dplyr::count(.Controlled, Trial_Success)
 .success_non_Controlled <- dplyr::count(.Non_Controlled, Trial_Success)
-.Controlled_Success <- Percentage_calc_large(.success_Controlled)
-.Non_Controlled_Success <- Percentage_calc_large(.success_non_Controlled)
+.Controlled_Success <- Percentage_calc(.success_Controlled)
+.Non_Controlled_Success <- Percentage_calc(.success_non_Controlled)
 
 #RCT vs non-RCT, Efficacy
 .non_RCT <- subset(Efficacy, Controlled == FALSE & Randomized == FALSE)
@@ -60,7 +60,7 @@ Efficacy <- subset(Data, Safety == FALSE)
 .success_non_RCT <- dplyr::count(.non_RCT, .non_RCT$Trial_Success)
 .Non_RCT_Success <- Percentage_calc(.success_non_RCT)
 .success_RCT <- dplyr::count(.RCT_efficacy, Trial_Success)
-.RCT_Success <- Percentage_calc_large(.success_RCT)
+.RCT_Success <- Percentage_calc(.success_RCT)
 
 #Add Efficacy Results to a dataframe
 Efficacy_Overall_Results <- data.frame('Controlled' = .Controlled_Success, 'Not Controlled' = .Non_Controlled_Success, 
