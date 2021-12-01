@@ -35,6 +35,9 @@ Overall_Results$Tot_perc_control <- Percentage_calc(.control_overall)
 .RCT <- subset(Data, Controlled == TRUE & Randomized == TRUE)
 Overall_Results$tot_perc_RCT <- (nrow(.RCT)/nrow(Data))*100
 
+#Termination reasons
+Termination_Reason <- dplyr::count(Data, Notes)
+
 #Efficacy Trials
 Efficacy <- subset(Data, Safety == FALSE)
 
