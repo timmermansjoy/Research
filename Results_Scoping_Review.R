@@ -34,8 +34,14 @@ References <- read_xlsx('Data/References.xlsx')
 
 #Create Scatter Plot Translational succes vs references
 ggplot(data = References, aes(x=Total_Number_of_References, y = Reported_Translational_Succes_rate)) + 
-  geom_point()
+  geom_point()+
+  labs(x="Total Number of References",y="Reported Translational Success Rate")+
+  theme_minimal()
 
 #create scatter plot animal vs human references
 ggplot(data = References, aes(x=Number_of_Animal_References, y =Number_of_Clinical_References)) + 
-  geom_point()
+  geom_point(position = position_jitter(width=0.5, height=0.5))+
+  labs(x="Number of Pre-Clinical References",y="Number of Clinical References")+
+  theme_minimal()+
+  xlim(NA,120)+
+  ylim(NA,120)
