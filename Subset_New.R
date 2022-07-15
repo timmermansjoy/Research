@@ -58,7 +58,7 @@ for(i in 1:(nrow(.Subgroups_Subset))){
     .c <- dplyr::count(.a, Terminated)
     #Create dataframes with percentage positive outcomes and terminations
     .z <- data.frame(Field = .Subgroups_Subset$disease[[i]], Success = Percentage_calc(.b))
-    .y <- data.frame(Field = Subgroups$disease[[i]], Termination = Percentage_calc(.c))
+    .y <- data.frame(Field = .Subgroups_Subset$disease[[i]], Termination = Percentage_calc(.c))
     #Add percentages to full overview dataframe
     Subgroup_Success <- rbind(Subgroup_Success, .z)
     Subgroup_Termination <- rbind(Subgroup_Termination, .y)

@@ -4,7 +4,7 @@
 #plot code occurrence, 
 #Associated Script: Grouping.R
 library(ggplot2)
-ggplot(data = All_Groups, aes(x=group, y=total, fill=substr(group, 0, 1))) + 
+ggplot(data = All_Groups, aes(x=group, y=total)) + 
   geom_bar(stat='identity', width = 0.8) + 
   theme_minimal() + 
   xlab ("ICD-10 Codes") + 
@@ -24,7 +24,7 @@ ggplot(data = Subgroup_Success, aes(x = Field, y = Success)) +
   xlab ("Field of Research") +
   ylab ("Percentage Positive Outcomes") +
   scale_y_continuous(limits = c(0 , 100)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1))
 
 #Plot subgroup termination
 #Associated script: Subsets.R
@@ -35,7 +35,7 @@ ggplot(data = Subgroup_Termination, aes(x = Field, y = Termination)) +
   xlab ("Field of Research") +
   ylab ("Percentage Terminated Trials") +
   scale_y_continuous(limits = c(0 , 100)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1))
 
 #Plot Chapter Success
 #Associated script: Subsets.R
@@ -46,7 +46,7 @@ ggplot(data = Chapter_Success, aes(x = Field, y = Success)) +
   xlab ("Field of Research") +
   ylab ("Percentage Positive Outcomes") +
   scale_y_continuous(limits = c(0 , 100)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1))
 
 #Plot Chapter Termination
 #Associated script: Subsets.R
@@ -57,4 +57,4 @@ ggplot(data = Chapter_Termination, aes(x = Field, y = Termination)) +
   xlab ("Field of Research") +
   ylab ("Percentage Terminated Trials") +
   scale_y_continuous(limits = c(0 , 100)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1))
