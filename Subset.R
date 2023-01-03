@@ -71,25 +71,21 @@ for(i in 1:(nrow(.Subgroups_Subset))){
 #Create Empty Dataframes
 Chapter_Success <- data.frame(matrix(ncol = 2, nrow = 0))
 Chapter_Termination <- data.frame(matrix(ncol = 2, nrow = 0))
-#Create malleable dataframes
-.Subgroups_Subset3 <- .Subgroups_Subset2
 
-for(i in 1:(nrow(.Subgroups_Subset2))){
+for(i in 1:(nrow(Subgroups))){
   #If code has 1 character
-  if (nchar(.Subgroups_Subset2$group[[i]]) == 1){
+  if (nchar(Subgroups$group[[i]]) == 1){
     #subset code
-    .a <- subset(Data, grepl(paste('^', .Subgroups_Subset2$group[[i]], sep = ""), Data$`ICD-10 Code`))
+    .a <- subset(Data, grepl(paste('^', Subgroups$group[[i]], sep = ""), Data$`ICD-10 Code`))
     #Count Success and  Termination
     .b <- dplyr::count(.a, Trial_Success)
     .c <- dplyr::count(.a, Terminated)
     #Create dataframes with percentage positive outcomes and terminations
-    .z <- data.frame(Field = .Subgroups_Subset2$disease[[i]], Success = Percentage_calc(.b))
-    .y <- data.frame(Field = .Subgroups_Subset2$disease[[i]], Termination = Percentage_calc(.c))
+    .z <- data.frame(Field = Subgroups$disease[[i]], Success = Percentage_calc(.b))
+    .y <- data.frame(Field = Subgroups$disease[[i]], Termination = Percentage_calc(.c))
     #Add percentages to full overview dataframe
     Chapter_Success <- rbind(Chapter_Success, .z)
     Chapter_Termination <- rbind(Chapter_Termination, .y)
-    #Delete Used data from primary dataframes
-    .Data_Subset <- subset(.Data_Subset, !str_detect(.Data_Subset$`ICD-10 Code`, .Subgroups_Subset2$group[[i]]))
   }
 }
 
